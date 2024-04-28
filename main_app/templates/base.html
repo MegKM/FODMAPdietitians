@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title>Monash FODMAP</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <p><a href="/">Home</a></p>
+            <p><a href="{% url 'index' %}">View Dietitians</a></p>
+            {% if not user.is_authenticated %}
+                <p><a href="{% url 'signup' %}">Register as Dietitian</a></p>
+            {% endif %}
+            {% if user.is_authenticated %}
+                {% if not user.is_superuser %}
+                    <p><a href="">Practice Location</a></p>
+                {% endif %}
+                {% if user.is_superuser %}
+                    <p><a href="{% url 'pending_requests' %}">Pending requests</a></p>
+                {% endif %}
+            <p><a href="{% url 'logout' %}">Log out</a></p>
+            {% else %}
+                <p id="login"><a href="{% url 'login' %}">Login</a></p>
+            {% endif %}
+        </nav>
+    </header>
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+      </main>
+</body>
+</html>

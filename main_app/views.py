@@ -1,3 +1,78 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import UserCreationForm
+from django.contrib.auth import login
+from user.models import User
 
-# Create your views here.
+def home(request):
+  return render(request, 'home.html')
+
+def dietitians_index(request):
+    dietitians = User.objects.all()
+    return render(request, 'dietitians/index.html', {
+        'dietitians' : dietitians
+    })
+
+def signup(request):
+    error_message = ''
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('signup_request_confirmed.html')
+        else:
+            error_message = 'Invalid sign up - try again'
+    form = UserCreationForm()
+    context = {'form': form, 'error_message': error_message}
+    return render(request, 'registration/signup.html', context)
+
+def signup_request_confirmed(request):
+    return render(request, 'signup_request_confirmed.html')
+
+
+def pending_requests(request):
+    dietitians = User.objects.all()
+    any_pending_requests = any(not dietitian.is_active for dietitian in dietitians)
+    return render(request, 'pending_requests.html', {
+        'dietitians' : dietitians,
+        'any_pending_requests': any_pending_requests
+    })
+
+def approve_dietitian(request, dietitian_id):
+    dietitian = get_object_or_404(User, id=dietitian_id)
+    dietitian.is_active = True
+    dietitian.save()
+    return redirect("pending_requests")
+
+def delete_request(request, dietitian_id):
+    dietitian = get_object_or_404(User, id=dietitian_id)
+    dietitian.delete()
+    return redirect("pending_requests")
+
+
+# def signup(request):
+#     error_message = ''
+#     if request.method == 'POST':
+#         user_form = UserCreationForm(request.POST)
+#         if user_form.is_valid():
+#             user_form = user_form.save()
+#             login(request, user_form)
+#             return redirect('home')
+#         else:
+#             if 'username' in user_form.errors:
+#                 username_errors = user_form.errors['username']
+#                 if 'This field may only contain letters, numbers, and @/./+/-/_ characters.' in username_errors:
+#                     error_message = 'Invalid characters in username. Please use only letters, numbers, and @/./+/-/_ characters.'
+#                 elif 'A user with that username already exists.' in username_errors:
+#                     error_message = 'Username is already taken. Please choose a different one.'
+#                 else:
+#                     error_message = 'Invalid username. Please choose a different one.'
+#             if 'password1' in user_form.errors or 'password2' in user_form.errors:
+#                 error_message = 'Invalid password - passwords do not match or are weak.'
+#             else:
+#                 error_message = 'Invalid sign up - try again'
+#     user_form = UserCreationForm()
+#     context = {
+#         'user_form': user_form, 
+#         'error_message': error_message}
+#     return render(request, 'registration/signup.html', context)
