@@ -1,7 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import UserCreationForm
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView
 from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from .forms import UserCreationForm
 from user.models import User
+from .models import Practice
 
 def home(request):
   return render(request, 'home.html')
@@ -12,6 +17,8 @@ def dietitians_index(request):
         'dietitians' : dietitians
     })
 
+
+#------------------- Manage Dietitian accounts ---------------------#
 def signup(request):
     error_message = ''
     if request.method == 'POST':
@@ -49,6 +56,22 @@ def delete_request(request, dietitian_id):
     dietitian.delete()
     return redirect("pending_requests")
 
+
+#-----------------Manage practice accounts---------------#
+
+class PracticeList(ListView):
+    model = Practice
+
+class PracticeCreate(LoginRequiredMixin, CreateView):
+    model = Practice
+    fields = ['email', 'address', 'phone', 'website']
+    success_url = reverse_lazy('practice_list')
+
+    def form_valid(self, form):
+        form.instance.dietitian = self.request.user
+        return super().form_valid(form)
+    
+    
 
 # def signup(request):
 #     error_message = ''
