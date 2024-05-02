@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <h1>Find a dietitian near you</h1>
+    <div class="card-container">
+        {% for practice in practices %}
+        
+        <div class="card">
+            <h2>Dietitian: {{ practice.dietitian.first_name }} {{ practice.dietitian.last_name }}</h2>
+            <p>Email: {{ practice.email }}</p>
+            <p>Address: {{ practice.addressStreetNumberName }}, {{ practice.addressSuburb }}, {{ practice.addressCity }}, {{ practice.addressState }}, {{ practice.addressCountry }}, {{ practice.addressPostCode }}</p>
+            <p>Phone: {{ practice.phone }}</p>
+            <p>Website: {{ practice.website }}</p>
+        </div>
+        {% empty %}
+            <p>No practices found.</p>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

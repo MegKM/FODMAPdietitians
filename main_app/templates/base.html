@@ -5,26 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <title>Monash FODMAP</title>
 </head>
 <body>
     <header>
-        <nav>
+        <nav class="{% if user.is_authenticated and not user.is_superuser%} dietitian-view {% elif user.is_superuser %} admin-view {% else %} user-view {% endif %}">
+            {% if user.is_superuser %}
+                <p id="admin-note">Admin View</p>
+            {% endif %}
             <p><a href="/">Home</a></p>
-            <p><a href="{% url 'index' %}">View Dietitians</a></p>
+            <p><a href="{% url 'dietitians_practices' %}">Dietitians & Practices</a></p>
             {% if not user.is_authenticated %}
                 <p><a href="{% url 'signup' %}">Register as Dietitian</a></p>
             {% endif %}
             {% if user.is_authenticated %}
                 {% if not user.is_superuser %}
-                    <p><a href="{% url 'practice_list' %}">Practice Location</a></p>
+                    <p><a href="{% url 'practice_list' %}">Your Practice Location(s)</a></p>
                 {% endif %}
                 {% if user.is_superuser %}
+                    <p><a href="{% url 'index' %}">View all current dietitians</a></p>
                     <p><a href="{% url 'pending_requests' %}">Pending requests</a></p>
                 {% endif %}
-            <p><a href="{% url 'logout' %}">Log out</a></p>
+            <p class="login-logout"><a href="{% url 'logout' %}">Log out</a></p>
+
+            <p id="nav-welcome">Welcome, {{ user.first_name }}</p>
+            
             {% else %}
-                <p id="login"><a href="{% url 'login' %}">Login</a></p>
+                <p class="login-logout"><a href="{% url 'login' %}">Login</a></p>
             {% endif %}
         </nav>
     </header>

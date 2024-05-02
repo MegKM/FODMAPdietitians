@@ -12,11 +12,18 @@ def home(request):
   return render(request, 'home.html')
 
 def dietitians_index(request):
-    dietitians = User.objects.all()
+    dietitians = User.objects.filter(is_superuser=False)
     return render(request, 'dietitians/index.html', {
         'dietitians' : dietitians
     })
 
+def dietitians_practices(request):
+    dietitians = User.objects.filter(is_superuser=False)
+    practices = Practice.objects.all()
+    return render(request, 'dietitians_practices.html', {
+        'dietitians' : dietitians,
+        'practices': practices      
+    })
 
 #------------------- Manage Dietitian accounts ---------------------#
 def signup(request):
@@ -26,7 +33,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('signup_request_confirmed.html')
+            return redirect('signup_request_confirmed')
         else:
             error_message = 'Invalid sign up - try again'
     form = UserCreationForm()
@@ -64,12 +71,20 @@ class PracticeList(ListView):
 
 class PracticeCreate(LoginRequiredMixin, CreateView):
     model = Practice
-    fields = ['email', 'address', 'phone', 'website']
+    fields = ['email', 'addressStreetNumberName', 'addressSuburb', 'addressCity', 'addressState', 'addressCountry', 'addressPostCode', 'phone', 'website']
     success_url = reverse_lazy('practice_list')
 
     def form_valid(self, form):
         form.instance.dietitian = self.request.user
         return super().form_valid(form)
+    
+class PracticeUpdate(LoginRequiredMixin, UpdateView):
+    model = Practice
+    fields = '__all__'
+
+class PracticeDelete(LoginRequiredMixin, DeleteView):
+    model = Practice
+    success_url = '/practice'
     
     
 

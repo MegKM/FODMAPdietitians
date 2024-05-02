@@ -5,13 +5,17 @@
     <h1>Current Practices</h1>
     {% for practice in practice_list %}
         {% if practice.dietitian == user %}
-            <p>{{ practice.address }}</p>
+            <p>{{ practice.addressStreetNumberName }}, {{ practice.addressSuburb }}, {{ practice.City}}</p>
+            <p>{{ practice.addressState }}, {{ practice.addressCountry }}, {{ practice.addressPostCode }} </p>
             <p>{{ practice.phone }}</p>
             <p>{{ practice.email }}</p>
             <p>{{ practice.website }}</p>
+
+            <button><a href="{% url 'practice_update' practice.id %}">Edit</a></button>
+            <button><a href="{% url 'practice_delete' practice.id %}">Delete</a></button>
         {% endif %}
     {% endfor %}
-
+</br>
     <a href="/practice/create">Add practice</a>
 </div>
 

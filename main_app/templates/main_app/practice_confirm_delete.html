@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Delete Practice</h1>
+
+  <p>Are you sure you want to delete?</p>
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Yes" class="btn">
+    <a href="{% url 'practice_list' %}">Cancel</a>
+  </form>
+{% endblock %}
