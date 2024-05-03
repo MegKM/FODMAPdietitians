@@ -1,32 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
-        {% for dietitian in dietitians %}
-            {% if not dietitian.is_active %}
-                <div class="card">
-                    <div class="card-content">
-                    <span class="card-title">{{ dietitian.first_name }} {{ dietitian.last_name }}</span>
-                    <p>Email: {{ dietitian.email }}</p>
-                    <p>Phone: {{ dietitian.phone }}</p>
-                    <p>Country: {{ dietitian.country }}</p>
-                    <form action="{% url 'approve_dietitian' dietitian.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit">Approve Dietitian</button>
-                    </form>
-                    <form action="{% url 'delete_request' dietitian.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit">Delete request</button>
-                    </form>
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-        {% if not any_pending_requests %}
-            <div>
-                <p>No pending requests</p>
+<h1>Pending requests </h1>
+{% for dietitian in dietitians %}
+    {% if not dietitian.is_active %}
+        <div class="card">
+            <div class="card-content">
+            <h2>{{ dietitian.first_name }} {{ dietitian.last_name }}</h2>
+            <p>Email: {{ dietitian.email }}</p>
+            <p>Phone: {{ dietitian.phone }}</p>
+            <p>Country: {{ dietitian.country }}</p>
+            <div id="request-buttons">
+                <form action="{% url 'approve_dietitian' dietitian.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">Approve Dietitian</button>
+                </form>
+                <form action="{% url 'delete_request' dietitian.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">Delete request</button>
+                </form>
             </div>
-        {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+{% if not any_pending_requests %}
+    <div>
+        <p>No pending requests</p>
+    </div>
+{% endif %}
 
 
 {% endblock %}

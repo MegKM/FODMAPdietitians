@@ -6,6 +6,29 @@ main {
     margin: 0px 100px 50px 100px;
 }
 
+@media (max-width: 750px) {
+    body {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+    }
+    main {
+        margin: 15px;
+    }
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+button {
+    height: 40px;
+    width: 100px;
+    margin: 5px;
+}
+
+/* NavBar */
+
 nav {
     display: flex;
     flex-direction: row;
@@ -13,9 +36,19 @@ nav {
     align-items: flex-end;
 }
 
+@media (max-width: 750px) {
+    nav {
+        flex-direction: column;
+        height: 100vh;
+        align-items: flex-start;
+    }
+
+    #nav-welcome, #admin-note {
+        display: none;
+    }
+}
 
 nav a, nav p, h1 {
-    text-decoration: none;
     font-family: "Playfair Display", serif;
     font-optical-sizing: auto;
     font-weight: 600;
@@ -59,15 +92,23 @@ nav p {
     background-color: rgba(240, 184, 224, 0.596);
 }
 
-#signup-form-container {
+/* Forms */
+
+.form-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#signup-form {
+.form {
     display: grid;
     grid-template-columns: 1fr 1fr;
+}
+
+.form-button {
+    width: calc(100% - 20px);
+    max-width: 100%;
+    justify-self: center;
 }
 
 #email {
@@ -79,27 +120,33 @@ nav p {
     max-width: 100%;
 }
 
-#signup-form input{
+.form input { 
     height: 30px;
     margin: 5px 5px 2px 5px;
 }
 
-#signup-form p {
+.form p {
     margin: 5px;
 }
 
+/* Cards */
 .card-container {
     display: flex;
-
+    flex-wrap: wrap;
 }
 
 .card {
-    border: 2px solid black;
+    border: 2px solid rgb(134, 134, 134);
+    box-shadow: 2px 2px 5px rgb(87, 86, 86);
     padding: 20px;
     margin: 5px;
+    width: 40vh;
 }
 
-
+#request-buttons {
+    display: flex;
+    flex-direction: row;
+}
 
 
 

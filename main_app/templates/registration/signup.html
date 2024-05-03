@@ -1,47 +1,45 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div id="signup-form-container">
+<div class="form-container">
+    <form method="POST" action="{% url 'signup' %}">
+        {% csrf_token %}
+        <h1>Sign up</h1>
+        <p>{{ error_message }}</p>
+        <div class="form">
+            <p id="first-name">
+                <label for="id_first_name">First name:</label></br>
+                <input type="text" name="first_name" maxlength="100" required="" id="id_first_name">
+            </p>
+            <p id="last-name">
+                <label for="id_last_name">Last name:</label></br>
+                <input type="text" name="last_name" maxlength="100" required="" id="id_last_name">
+            </p>
+            <p id="email">
+                <label for="id_email">Email:</label></br>
+                <input type="email" name="email" maxlength="254" autofocus="" id="id_email">
+            </p>
+            <p id="phone">
+                <label for="id_phone">Phone:</label></br>
+                <input type="text" name="phone" maxlength="20" required="" id="id_phone">
+            </p>
+            <p id="country">
+                <label for="id_country">Country:</label></br>
+                <input type="text" name="country" maxlength="100" required="" id="id_country">
+            </p>
+            <p id="password1">
+                <label for="id_password1">Password:</label></br>
+                <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1">
 
-
-<form method="POST" action="{% url 'signup' %}">
-    {% csrf_token %}
-    <h1>Sign up</h1>
-    <p>{{ error_message }}</p>
-    <div id="signup-form">
-        <p id="first-name">
-            <label for="id_first_name">First name:</label></br>
-            <input type="text" name="first_name" maxlength="100" required="" id="id_first_name">
-        </p>
-        <p id="last-name">
-            <label for="id_last_name">Last name:</label></br>
-            <input type="text" name="last_name" maxlength="100" required="" id="id_last_name">
-        </p>
-        <p id="email">
-            <label for="id_email">Email:</label></br>
-            <input type="email" name="email" maxlength="254" autofocus="" id="id_email">
-        </p>
-        <p id="phone">
-            <label for="id_phone">Phone:</label></br>
-            <input type="text" name="phone" maxlength="20" required="" id="id_phone">
-        </p>
-        <p id="country">
-            <label for="id_country">Country:</label></br>
-            <input type="text" name="country" maxlength="100" required="" id="id_country">
-        </p>
-        <p id="password1">
-            <label for="id_password1">Password:</label></br>
-            <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1">
-
-        <p id="password2">
-            <label for="id_password2">Password confirmation:</label></br>
-            <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2"></br>
-        </p>
-        <input type="submit" class="btn btn-dark" value="Sign Up">
-    </div>
-</form>
+            <p id="password2">
+                <label for="id_password2">Password confirmation:</label></br>
+                <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2"></br>
+            </p>
+            <input type="submit" class="signup-form-button" value="Sign Up">
+        </div>
+    </form>
 </div>
-<hr>
+
 
 
 {% endblock %}

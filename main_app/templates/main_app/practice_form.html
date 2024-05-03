@@ -1,55 +1,51 @@
 {% extends 'base.html' %}
-
 {% block content %}
 
-{% if object %}
-  <h1>Edit Practice</h1>
-{% else %}
-  <h1>Add Practice</h1>
-{% endif %}
-
+<div class="form-container">
 {% if user.is_authenticated %}
-<div class="container mt-4">
     <form action="" method="post">
         {% csrf_token %}
-        <p>
-            <label for="id_email">Email:</label>
-            <input type="text" name="email" maxlength="150" required="" id="id_email" value="{{ practice.email }}">
-        </p>
-        <p>
-            <label for="id_addressStreetNumberName">Street address:</label>
-            <input type="text" name="addressStreetNumberName" maxlength="250" required="" id="id_addressStreetNumberName" value="{{ practice.addressStreetNumberName }}"> 
-        </p>
-        <p>
-            <label for="id_addressSuburb">Suburb:</label>
-            <input type="text" name="addressSuburb" maxlength="250" required="" id="id_addressSuburb" value="{{ practice.addressSuburb }}">
-        </p>
-        <p>
-            <label for="id_addressCity">City:</label>
-            <input type="text" name="addressCity" maxlength="250" required="" id="id_addressCity" value="{{ practice.addressCity }}">
-        </p>
-        <p>
-            <label for="id_addressState">State:</label>
-            <input type="text" name="addressState" maxlength="250" required="" id="id_addressState" value="{{ practice.addressState }}">
-        </p>
-        <p>
-            <label for="id_addressCountry">Country:</label>
-            <input type="text" name="addressCountry" maxlength="250" required="" id="id_addressCountry" value="{{ practice.addressCountry }}">
-        </p>
-        <p>
-            <label for="id_addressPostCode">Post code:</label>
-            <input type="text" name="addressPostCode" maxlength="250" required="" id="id_addressPostCode" value="{{ practice.addressPostCode }}">
-        </p>
-        <p>
-            <label for="id_phone">Phone:</label>
-            <input type="text" name="phone" maxlength="20" required="" id="id_phone" value="{{ practice.phone }}">
-        </p>
-        <p>
-            <label for="id_website">Website:</label>
-            <input type="text" name="website" maxlength="200" required="" id="id_website" value="{{ practice.website }}">
-        </p>
-        <input type="submit" value="Submit" class="btn btn-dark">
-    </form>
+        <h1>Add Practice</h1>
+        <div class="form">
+            <p id="email">
+                <label for="id_email">Email:</label></br>
+                <input type="text" name="email" maxlength="150" required="" id="id_email" value="{{ practice.email }}">
+            </p>
+            <p>
+                <label for="id_addressStreetNumberName">Street address:</label></br>
+                <input type="text" name="addressStreetNumberName" maxlength="250" required="" id="id_addressStreetNumberName" value="{{ practice.addressStreetNumberName }}"> 
+            </p>
+            <p>
+                <label for="id_addressSuburb">Suburb:</label></br>
+                <input type="text" name="addressSuburb" maxlength="250" required="" id="id_addressSuburb" value="{{ practice.addressSuburb }}">
+            </p>
+            <p>
+                <label for="id_addressCity">City:</label></br>
+                <input type="text" name="addressCity" maxlength="250" required="" id="id_addressCity" value="{{ practice.addressCity }}">
+            </p>
+            <p>
+                <label for="id_addressState">State:</label></br>
+                <input type="text" name="addressState" maxlength="250" required="" id="id_addressState" value="{{ practice.addressState }}">
+            </p>
+            <p>
+                <label for="id_addressCountry">Country:</label></br>
+                <input type="text" name="addressCountry" maxlength="250" required="" id="id_addressCountry" value="{{ practice.addressCountry }}">
+            </p>
+            <p>
+                <label for="id_addressPostCode">Post code:</label></br>
+                <input type="text" name="addressPostCode" maxlength="250" required="" id="id_addressPostCode" value="{{ practice.addressPostCode }}">
+            </p>
+            <p>
+                <label for="id_phone">Phone:</label></br>
+                <input type="text" name="phone" maxlength="20" required="" id="id_phone" value="{{ practice.phone }}">
+            </p>
+            <p>
+                <label for="id_website">Website:</label></br>
+                <input type="text" name="website" maxlength="200" required="" id="id_website" value="{{ practice.website }}">
+            </p>
+            <input type="submit" value="Submit" class="form-button">
+        </div>
+    </form>    
 </div>
 
 {% else %}
